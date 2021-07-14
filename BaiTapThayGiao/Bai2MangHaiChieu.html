@@ -41,18 +41,7 @@
     }
 
     var arr1 = taoMangHaiChieu(n, 40, 10);
-    var arr2 = taoMangHaiChieu(n, 40, 10);
-    document.write("ma trận thứ nhất: " + "<br>");
-    hienThiMang(arr1);
-    document.write("<br>");
-
-    document.write("ma trận thứ hai: " + "<br>");
-    hienThiMang(arr2);
-    document.write("<br>");
-
-    document.write("tích của 2 ma trận: " + "<br>");
-    hienThiMang(nhanHaiMang(arr1, arr2));
-    document.write("<br>");
+    var arr2 = taoMangHaiChieu(n, 40, 10);  
 
     function nhanHaiMang(arr1, arr2) {
         var arr = [];
@@ -107,6 +96,19 @@
         }
         return arr;
     }
+
+    document.write("ma trận thứ nhất: " + "<br>");
+    hienThiMang(arr1);
+    document.write("<br>");
+
+    document.write("ma trận thứ hai: " + "<br>");
+    hienThiMang(arr2);
+    document.write("<br>");
+
+    document.write("tích của 2 ma trận: " + "<br>");
+    hienThiMang(nhanHaiMang(arr1, arr2));
+    document.write("<br>");
+
 </script>
 
 </html>

@@ -35,7 +35,6 @@ Yếu cầu:
 </body>
 <script>
     // Bai 1
-    var n = parseInt(prompt("Nhập vào kích thước của mảng: "));
 
     function taoMangHaiChieu(size, max, min) {
         var board = [];
@@ -54,8 +53,6 @@ Yếu cầu:
         return board; 
     }
 
-    var arr = taoMangHaiChieu(n, 90, 10);
-
     function hienThiMang(board) {
         for (let i = 0; i < board.length; i++) {
             for (let j = 0; j < board[i].length; j++) {
@@ -64,9 +61,6 @@ Yếu cầu:
             document.write("<br>");
         }
     }
-
-    hienThiMang(arr);
-    document.write("<br>");
 
     function tongSoChan(arr) {
         var sumeven = 0;
@@ -80,8 +74,6 @@ Yếu cầu:
         return sumeven;
     }
 
-    document.write("tổng các số chẵn trong ma trận là: " + tongSoChan(arr) + "<br>");
-
     function tongDuongCheoChinh(arr) {
         let sum = 0;
         for (let i = 0; i < arr.length; i++) {
@@ -90,7 +82,6 @@ Yếu cầu:
 
         return sum;
     }
-    document.write("tổng các giá trị trên đường chéo chính là: " + tongDuongCheoChinh(arr) + "<br>");
 
     function tongDuongCheoPhu(arr) {
         let sum = 0;
@@ -100,7 +91,6 @@ Yếu cầu:
 
         return sum;
     }
-    document.write("tổng các giá trị trên đường chéo phụ là: " + tongDuongCheoPhu(arr) + "<br>");
 
     function tongDuongBien(arr) {
         var sum = 0;
@@ -113,9 +103,6 @@ Yếu cầu:
         }
         return sum;
     }
-    document.write("tổng các giá trị trên đường biên: " + tongDuongBien(arr) + "<br>");
-
-    document.write("ma trận tam giác trên: " + "<br>" + "<br>");
 
     function hienThiMaTranTamGiacTren(board) {
         var count = 0;
@@ -130,13 +117,7 @@ Yếu cầu:
         }
     }
 
-    hienThiMaTranTamGiacTren(arr);
-    document.write("<br>");
-
-    document.write("ma trận tam giác dưới: " + "<br>");
-
     function hienThiMaTranTamGiacDuoi(board) {
-        var count = 0;
         for (let i = 0; i < board.length; i++) {
             for (let j = 0; j < board[i].length; j++) {
                 if (j > i)
@@ -147,6 +128,28 @@ Yếu cầu:
             document.write("<br>");
         }
     }
+
+    var n = parseInt(prompt("Nhập vào kích thước của mảng: "));
+
+    var arr = taoMangHaiChieu(n, 9, 1);
+
+    hienThiMang(arr);
+    document.write("<br>");
+
+    document.write("tổng các số chẵn trong ma trận là: " + tongSoChan(arr) + "<br>");
+
+    document.write("tổng các giá trị trên đường chéo chính là: " + tongDuongCheoChinh(arr) + "<br>");
+
+    document.write("tổng các giá trị trên đường chéo phụ là: " + tongDuongCheoPhu(arr) + "<br>");
+
+    document.write("tổng các giá trị trên đường biên: " + tongDuongBien(arr) + "<br>");
+
+    document.write("ma trận tam giác trên: " + "<br>" + "<br>");
+
+    hienThiMaTranTamGiacTren(arr);
+    document.write("<br>");
+
+    document.write("ma trận tam giác dưới: " + "<br>");
 
     hienThiMaTranTamGiacDuoi(arr);
     document.write("<br>");

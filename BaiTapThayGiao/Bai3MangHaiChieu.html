@@ -24,7 +24,6 @@
                 board[i][j] = Math.floor(Math.random() * (max - min + 1) + min);
             }
         }
-        // console.log(board)
         return board;
     }
 
@@ -64,18 +63,7 @@
 
     function datLaiGiaTriBoiSoCua5(board) {
 
-        //let arr1 = board;
-        // var arr = [];
         var temp =0 ;
-        // for (let i = 0; i < board[0].length; i++) {
-        //     arr[i] = new Array();
-        //     for (let j = 0; j < board.length; j++) {
-        //         arr[i][j] = new Array();
-        //     }
-        // }
-            // console.log(board.length)
-            // console.log(board[0].length)
-
         for (let i = 0; i < board.length; i++) {
             for (let j = 0; j < board[i].length; j++) {
                 while (true) {
@@ -89,7 +77,6 @@
         }
         return board;
     }
-    // console.log(`arr 3 : ${typeof arr3}`)
 
     document.write("hiển thị ma trận chỉ gồm các giá trị là bội số của 5: "+"<br>");
     arr4 = datLaiGiaTriBoiSoCua5(arr3);
