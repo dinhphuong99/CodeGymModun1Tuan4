@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let Temperature = function (degreeC) {
+
+        this.degreeC = degreeC;
+
+        this.setDegreeC = function () {
+            this.degreeC = degreeC;
+        }
+
+        this.getDegreeC = function () {
+            return degreeC;
+        }
+
+        this.degreeCToDegreeF = function () {
+            return degreeC*1.8 + 32;
+        }
+
+        this.degreeCToDegreeK = function () {
+            return degreeC + 273.15;
+        }
+    }
+
+    let degC = new Temperature(25);
+    document.write("Độ C: " + degC.getDegreeC()+"<br>");
+
+    let degF = degC.degreeCToDegreeF();
+    document.write("Độ F: " + degF +"<br>");
+
+    let degK = degC.degreeCToDegreeK();
+    document.write("Độ F: " + degK +"<br>");
+</script>
+</html>
