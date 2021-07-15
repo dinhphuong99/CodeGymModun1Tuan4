@@ -42,7 +42,7 @@ function start() {
     hero.moveRight();
   }
 
-  if (hero.left + 40 > window.innerWidth - hero.size && hero.top -30 < window.innerHeight - hero.size) {
+  if (hero.left + 40 > window.innerWidth - hero.size && hero.top < window.innerHeight - hero.size) {
     hero.moveBottom();
   } 
 
