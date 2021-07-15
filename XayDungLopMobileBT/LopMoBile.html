@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Mobile phone</h2>
+    <table border="1">
+        <tr>
+            <td>
+                <input type="button" value="Turn On">
+            </td>
+            <td>
+                <input type="button" value="Turn Off">
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <input type="button" value="Sạc pin">
+            </td>
+            <td>
+                <input type="button" value="Soạn tin nhắn" onclick="funct4()">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" value="Xem tin trong hộp thư đến">
+            </td>
+            <td>
+                <input type="button" value="Xem tin đã gửi">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" value="Gửi tin nhắn">
+            </td>
+            <td>
+                <input type="button" value="Kiểm tra pin">
+            </td>
+        </tr>
+    </table>
+    <script>
+        
+        var messSend = [];
+        var Moblie = function (battery, memoryArea2, memoryArea3) {
+            this.battery = battery;
+            this.status = true;
+
+            this.memoryArea1 = []; //lưu tin nhắn đang soạn thảo
+            this.memoryArea2 = memoryArea2;//lưu tin nhắn trong hộp thư đến
+            this.memoryArea3 = memoryArea3;//lưu tin nhắn đã gửi
+
+            this.checkStatusOnOff = function (){
+                if (this.battery > 0 && this.status == true) {
+                    return true;
+                } else {
+                    return false;
+                }
+            };
+
+            this.turnOn = function (){
+                if (this.checkStatusOnOff() == true ) {
+                    alert("Đã khỏi động!");
+                }else
+                    alert("Đang khỏi động!");
+            };
+
+            this.turnOff = function (){
+                if (this.checkStatusOnOff() == true ) {
+                    alert("Tắt nguồn.....");
+                }
+            };
+
+            this.charge = function (){
+                if (this.checkStatusOnOff() == true ) {
+                    alert(`Đang sạc pin....... ${this.battery++}%`);
+                }else
+                    this.battery++;
+            };
+
+            this.writeMessenger = function (){
+                let mess = prompt("Mời nhập tin nhắn:");
+                this.memoryArea1[this.memoryArea1.length + 1] = mess;
+            };
+
+            this.sendMessenger = function (){
+                alert("Đã gửi!");
+            };
+
+            this.afterUse = function (){
+                alert(`Dung lượng pin hiện tại: ${this.battery--}%`);
+            }
+
+        };
+
+        let mobile = new Moblie(50,100,100);
+
+        function funct4(){
+            mobile.writeMessenger();
+        }
+    </script>
+</body>
+
+</html>
