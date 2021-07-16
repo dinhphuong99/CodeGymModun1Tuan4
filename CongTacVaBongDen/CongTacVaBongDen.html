@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <input type="button" value="Nút nguồn" onclick="OnOffSwitch()">
+        <div id="hienThi">
+
+        </div>
+    </div>
+</body>
+<script>
+    var SwitchButton = function (status, lamp) {
+        this.status = status;
+        this.lamp = lamp;
+
+        this.SwitchButton = function () {
+            var CT ="";
+            (this.status)?CT = "Bật": CT = "Tắt";
+            var BD ="";
+            (this.lamp.ElectricLamp())?BD = "Bật": BD = "Tắt";
+
+            var hienThiThongTin = `Công tắc: ${CT} Bóng đèn: ${BD}`;
+            return hienThiThongTin;
+        }
+
+        this.connectToLamp = function () {
+            if (this.status == true && this.lamp.ElectricLamp() == true) {
+                alert("Connected!");
+            }
+            else {
+                alert("Try again!");
+            }
+        };
+        this.switchOff = function () {
+            alert("Turn off...");
+            this.lamp.turnOff();
+            this.status = false;
+        };
+
+        this.switchOn = function () {
+            this.lamp.turnOn();
+            this.status = true;
+            alert("Turn on!");
+        };
+    };
+
+    var ElectricLamp = function (status) {
+        this.status = status;
+
+        this.ElectricLamp = function () {
+            return this.status;
+        }
+
+        this.turnOff = function () {
+            alert("Turn off...");
+            this.status = false;
+        };
+
+        this.turnOn = function () {
+            this.status = true;
+            alert("Turn on!");
+        };
+    };
+
+    var denDien = new ElectricLamp(true);
+    
+    var congTac = new SwitchButton(true, denDien);
+    var fla = true;
+    function OnOffSwitch() {
+        if (fla) {
+            congTac.switchOn();
+            congTac.connectToLamp();
+            document.getElementById("hienThi").innerHTML = congTac.SwitchButton();
+            fla = false;
+            
+        } else {
+            congTac.switchOff();
+            congTac.connectToLamp();
+            document.getElementById("hienThi").innerHTML = congTac.SwitchButton();
+            fla = true;
+        }
+    }
+
+</script>
+
+</html>
