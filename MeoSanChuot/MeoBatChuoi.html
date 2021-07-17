@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input {
+            background-color: #2d30dd;
+            color: #e61111;
+            border: none;
+            font-family: verdana;
+            text-align: center;
+        }
+
+        .tbl {
+            background-color: #0cd0f3;
+            border: 10px;
+            margin: auto;
+            width: 30%;
+            border: none;
+            outline: none;
+            padding: 1px;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="">
+        <div id="btn" class="tbl">
+            <input type="button" value="Mouse" onclick="funct1()">
+            <input type="button" value="Cat" onclick="funct2()"><br>
+            <input type="button" value="Mouse info" onclick="funct3()">
+            <input type="button" value="Cat info" onclick="funct4()"><br>
+            <input type="button" value="Cat catch Mouse" onclick="funct5()">
+            <input type="button" value="Cat eat Mouse" onclick="funct6()">
+            <p id = "info1">
+
+            </p>
+
+        </div>
+    </form>
+
+    <script>
+        var Rat = function (name, mouseweight, mousespeed, status) {
+            this.name = name;
+            this.mouseweight = mouseweight;
+            this.mousespeed = mousespeed;
+            this.status = status;
+
+            this.getMouseWeight = function () {
+                return this.mouseweight;
+            };
+
+            this.said = function () {
+                alert("chít, chít");
+            };
+
+            this.info = function () {
+                var life ="";
+                (this.status == false)? life = "die":life = "alive"; 
+
+                var ratInfor = `Rat's name is: ${this.name} <br> 
+                Rat's weight is: ${this.mouseweight} <br> Rat's speed is: ${this.mousespeed} Rat is: ${life}`;
+                return ratInfor;
+            };
+
+            this.getMouseSpeed = function () {
+                return this.mousespeed
+            };
+
+            this.getMouseStatus = function () {
+                return this.status;
+            }
+
+            this.setMouseStatus = function (status) {
+                this.status = status;
+            }
+        }
+
+        var Cat = function (catname, catweight, catspeed) {
+            this.catname = catname;
+            this.catweight = catweight;
+            this.catspeed = catspeed;
+
+            this.catSaid = function () {
+                alert("meo, meo");
+            };
+            this.catinfo = function () {
+                var catInfor = `Rat's name is: ${this.catname} <br> Rat's weight is: ${this.catweight} <br> Rat's speed is: ${this.catspeed}`;
+                return catInfor;
+            };
+
+            this.catchMouse = function (rat) {
+                if (this.catspeed > rat.getMouseSpeed()) {
+                    alert("caught the mouse");
+                }
+            };
+
+            this.eatMouse = function (rat) {
+                if (rat.getMouseStatus() == true){
+                    this.catweight = this.catweight + rat.getMouseWeight();
+                    rat.status = false;
+                    //rat.setMouseStatus(false);
+                }
+                return this.catweight;
+            };
+        };
+        var mouse1 = new Rat("Jerry", 2, 50, true);
+        var cat = new Cat("Tom", 5, 100);
+        //alert(mouse1.getMouseStatus());
+
+        function funct1() {
+            mouse.said();
+        }
+        function funct2() {
+            cat.catSaid();
+        }
+        function funct3() {
+            document.getElementById("info1").innerHTML = mouse1.info();
+        }
+        function funct4() {
+            document.getElementById("info1").innerHTML = cat.catinfo();
+        }
+        function funct5() {
+            cat.catchMouse(mouse);
+        }
+        function funct6() {
+            alert(`The mouse has been eaten and Cat's weight is:  ${cat.eatMouse(mouse1)}`);
+        }
+    </script>
+</body>
+
+</html>
