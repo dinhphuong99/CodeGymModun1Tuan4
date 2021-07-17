@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caro</title>
+    <style>
+        td {
+            width: 60px;
+            height: 60px;
+            text-align: center;
+            border: 1px solid blue;
+            /*border-collapse: collapse;*/
+        }
+
+        table {
+            border: 1px solid blue;
+            border-collapse: collapse;
+            margin: auto;
+        }
+
+        * {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        td:hover {
+            cursor: pointer;
+        }
+
+        td {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .bg-green {
+            background-color: #14EAEE;
+        }
+
+        .bg-orange {
+            background-color: #F84343;
+        }
+
+        .bg-white {
+            background-color: white;
+        }
+
+        .bg-green,
+        .bg-orange {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="caro-area">
+
+    </div>
+
+    <script>
+        const player_x = 1;
+        const player_o = 2;
+        var player_x_win = 4;
+        var player_o_win = 40;
+
+        let player = player_x;
+        let size = parseInt(prompt("Enter size of board."));
+        let luotchoi = Math.floor((Math.random() * 2) + 1);
+        if (luotchoi == 1) {
+            alert('Player 1 go first!');
+        }
+        else {
+            alert('Player 2 go first!');
+        }
+        let caro = [];
+        let isGameEnd = false;
+
+
+        for (let i = 0; i < size; i++) {
+            caro[i] = new Array();
+            for (let j = 0; j < size; j++) {
+                caro[i][j] = 0;
+            }
+        }
+
+
+        let table = "<table border='1';margin:auto' >";
+        for (let i = 0; i < size; i++) {
+            table += "<tr>";
+            for (let j = 0; j < size; j++) {
+                table += `<td style="text-align:center" onclick="play(${i},${j})">${caro[i][j] == 0 ? '&nbsp;&nbsp;' : (caro[i][j] == 1 ? 'X' : 'O')} </td>`
+            }
+            table += "</tr>";
+        }
+        table += "</table>";
+
+        document.getElementById('caro-area').innerHTML = table;
+
+        function play(row, col) {
+            if (caro[row][col] != 0) {
+                alert(`invalid`);
+            }
+            else {
+                if (player == player_x) {
+                    player = player_o;
+                    caro[row][col] = 1;
+                }
+                else {
+                    player = player_x;
+                    caro[row][col] = 10;
+                }
+            }
+
+            let table = "<table border='1' margin:auto'>";
+            for (let i = 0; i < size; i++) {
+                table += "<tr>";
+                for (let j = 0; j < size; j++) {
+                    table += `<td style = "border: 1px solid blue; width: 60px; height: 60px; margin:auto; text-align: center;"
+                                class=${caro[i][j] == 0 ? 'bg-white' :
+                            caro[i][j] == 1 ? 'bg-green' : 'bg-orange'} 
+                                onclick="play(${i},${j})">${caro[i][j] == 0 ? '&nbsp;&nbsp;&nbsp;&nbsp;' : (caro[i][j] == 1 ? 'X' : 'O')} </td>`;
+                }
+                table += "</tr>";
+            }
+            table += "</table>";
+            //alert(caro[row][col]);
+            document.getElementById('caro-area').innerHTML = table;
+
+            checkWin();
+        }
+
+        function checkWin() {
+            for (let i = 0; i < caro.length; i++) {
+                for (let j = 0; j < caro[i].length - 3; j++) {
+                    var totalPathN1 = 0;
+                    var totalPathD2 = 0;
+                    var totalPathCC3 = 0;
+                    var totalPathCP4 = 0;
+                    var tempi = i;
+                    var tempj = j;
+
+                    if (i < 4) {
+                        totalPathN1 += totalPathN(i, j);
+                        totalPathD2 += totalPathD(i, j);
+                        totalPathCC3 += totalPathCC(i, j);
+                    } else if (i + 3 > caro.length) {
+                        totalPathN1 += totalPathN(i, j);
+                        totalPathCP4 += totalPathCP(i, j);
+                    } else {
+                        totalPathN1 += totalPathN(i, j);
+                        totalPathD2 += totalPathD(i, j);
+                        totalPathCC3 += totalPathCC(i, j);
+                        totalPathCP4 += totalPathCP(i, j);
+                    }
+
+                    if (totalPathN1 == 4 || totalPathD2 == 4 || totalPathCC3 == 4 || totalPathCP4 == 4) {
+                        alert("Player 1 win!");
+                        break;
+                    } else if (totalPathN1 == 40 || totalPathD2 == 40 || totalPathCC3 == 40 || totalPathCP4 == 40) {
+                        alert("Player 2 win!");
+                        break;
+                    }
+                }
+            }
+        }
+
+        function totalPathN(row, col) {
+            let total = 0;
+            let i = row;
+            let j = col;
+            for (; j < col + 3; j++) {
+                if (caro[i][j] == 0)
+                    break;
+
+                total += caro[i][j];
+            }
+            return total;
+        }
+
+        function totalPathD(row, col) {
+            let total = 0;
+            let j = col;
+            let i = row;
+            for (; i < 3; i++) {
+                if (caro[i][j] == 0)
+                    break;
+
+                total += caro[i][j];
+            }
+            return total;
+        }
+
+        function totalPathCC(row, col) {
+            let total = 0;
+            for (let i = row, j = col; j < col + 4; i++, j++) {
+                if (caro[i][j] == 0)
+                    break;
+
+                total = total + caro[i][j];
+            }
+            return total;
+        }
+
+        function totalPathCP(row, col) {
+            let total = 0;
+            let i = row;
+            let j = col;
+            for (; j < col + 3; j++, i--) {
+                if (caro[i][j] == 0)
+                    break;
+
+                total += caro[i][j];
+            }
+            return total;
+        }
+    </script>
+</body>
+
+</html>
