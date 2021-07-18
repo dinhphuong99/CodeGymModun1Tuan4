@@ -13,16 +13,16 @@
     <table border="1">
         <tr>
             <td>
-                <input type="button" value="Turn On">
+                <input type="button" value="Turn On" onclick="funct1()">
             </td>
             <td>
-                <input type="button" value="Turn Off">
+                <input type="button" value="Turn Off" onclick="funct2()">
             </td>
 
         </tr>
         <tr>
             <td>
-                <input type="button" value="Sạc pin">
+                <input type="button" value="Sạc pin" onclick="funct3()">
             </td>
             <td>
                 <input type="button" value="Soạn tin nhắn" onclick="funct4()">
@@ -30,33 +30,74 @@
         </tr>
         <tr>
             <td>
-                <input type="button" value="Xem tin trong hộp thư đến">
+                <input type="button" value="Xem tin trong hộp thư đến" onclick="funct5()">
             </td>
             <td>
-                <input type="button" value="Xem tin đã gửi">
+                <input type="button" value="Xem tin đã gửi" onclick="funct6()">
             </td>
         </tr>
         <tr>
             <td>
-                <input type="button" value="Gửi tin nhắn">
+                <input type="button" value="Gửi tin nhắn" onclick="funct7()">
             </td>
             <td>
-                <input type="button" value="Kiểm tra pin">
+                <input type="button" value="Kiểm tra pin" onclick="funct8()">
             </td>
         </tr>
     </table>
+    <br>
+
+
+    <h2>Mobile phone2</h2>
+    <table border="1">
+        <tr>
+            <td>
+                <input type="button" value="Turn On" onclick="functM1()">
+            </td>
+            <td>
+                <input type="button" value="Turn Off" onclick="functM2()">
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <input type="button" value="Sạc pin" onclick="functM3()">
+            </td>
+            <td>
+                <input type="button" value="Soạn tin nhắn" onclick="functM4()">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" value="Xem tin trong hộp thư đến" onclick="functM5()">
+            </td>
+            <td>
+                <input type="button" value="Xem tin đã gửi" onclick="functM6()">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" value="Gửi tin nhắn" onclick="functM7()">
+            </td>
+            <td>
+                <input type="button" value="Kiểm tra pin" onclick="functM8()">
+            </td>
+        </tr>
+    </table>
+
+    <p id = "info">
+
+    </p>
+
     <script>
-        
-        var messSend = [];
-        var Moblie = function (battery, memoryArea2, memoryArea3) {
+        var Moblie = function (battery) {
             this.battery = battery;
             this.status = true;
+            this.messenger = ""; //lưu tin nhắn đang soạn thảo
+            this.inbox = []; //lưu tin nhắn trong hộp thư đến
+            this.outbox = []; //lưu tin nhắn đã gửi
 
-            this.memoryArea1 = []; //lưu tin nhắn đang soạn thảo
-            this.memoryArea2 = memoryArea2;//lưu tin nhắn trong hộp thư đến
-            this.memoryArea3 = memoryArea3;//lưu tin nhắn đã gửi
-
-            this.checkStatusOnOff = function (){
+            this.checkStatusOnOff = function () {
                 if (this.battery > 0 && this.status == true) {
                     return true;
                 } else {
@@ -64,46 +105,149 @@
                 }
             };
 
-            this.turnOn = function (){
-                if (this.checkStatusOnOff() == true ) {
+            this.setStatus = function (status) {
+                this.status = status;
+            }
+
+            this.turnOn = function () {
+                if (this.checkStatusOnOff() == true) {
                     alert("Đã khỏi động!");
-                }else
+                } else
                     alert("Đang khỏi động!");
             };
 
-            this.turnOff = function (){
-                if (this.checkStatusOnOff() == true ) {
+            this.turnOff = function () {
+                if (this.checkStatusOnOff() == true) {
                     alert("Tắt nguồn.....");
                 }
             };
 
-            this.charge = function (){
-                if (this.checkStatusOnOff() == true ) {
+            this.charge = function () {
+                if (this.checkStatusOnOff() == true) {
                     alert(`Đang sạc pin....... ${this.battery++}%`);
-                }else
+                } else
                     this.battery++;
             };
 
-            this.writeMessenger = function (){
-                let mess = prompt("Mời nhập tin nhắn:");
-                this.memoryArea1[this.memoryArea1.length + 1] = mess;
+            this.writeMessenger = function () {
+                let answer = confirm("Bạn muốn nhập tiếp?");
+                if (answer) {
+                    alert("Tin nhắn đang soạn thảo:" + this.messenger);
+                    let mess = prompt("Mời nhập tiếp tin nhắn:");
+                    this.messenger = this.messenger + mess;
+                } else {
+                    let mess = prompt("Mời nhập tin nhắn mới:");
+                    this.messenger = mess;
+                }
             };
 
-            this.sendMessenger = function (){
+            this.sendMessenger = function (mobile) {
+                alert(this.messenger);
                 alert("Đã gửi!");
+                this.outbox.push(this.messenger);
+                mobile.receiveMessages(this.messenger);
+                return this.messenger;
             };
 
-            this.afterUse = function (){
-                alert(`Dung lượng pin hiện tại: ${this.battery--}%`);
+            this.ViewOutbox = function () {
+                alert("Tin đã gửi: ");
+
+                let str ="";
+                for (let i = 0; i < (this.outbox).length; i++) {
+                    str += `${this.outbox[i]} <br>`;
+                }
+
+                document.getElementById("info").innerHTML = str;
             }
 
+            this.receiveMessages = function (messengerIn) {
+                alert(messengerIn);
+                alert("Đã nhận tin: ");
+                this.inbox.push(messengerIn);
+            }
+
+            this.ViewInbox = function () {
+                alert("Tin đã nhận: ");
+                let str ="";
+                for (let i = 0; i < (this.inbox).length; i++) {
+                    str += `${this.inbox[i]} <br>`;
+                }
+
+                document.getElementById("info").innerHTML = str;
+            }
+
+            this.afterUse = function () {
+                alert(`Dung lượng pin hiện tại: ${this.battery--}%`);
+            }
         };
 
-        let mobile = new Moblie(50,100,100);
+        let mobile = new Moblie(50);
+        var mobile1 = new Moblie(50);
 
-        function funct4(){
+        function funct1() {
+            mobile.turnOn();
+        }
+
+        function functM1() {
+            mobile1.turnOn();
+        }
+
+        function funct2() {
+            mobile.turnOff();
+        }
+
+        function functM2() {
+            mobile1.turnOff();
+        }
+
+        function funct3() {
+            mobile.charge();
+        }
+
+        function functM3() {
+            mobile1.charge();
+        }
+
+        function funct4() {
             mobile.writeMessenger();
         }
+
+        function functM4() {
+            mobile1.writeMessenger();
+        }
+
+        function funct5() {
+            mobile.ViewInbox();
+        }
+
+        function functM5() {
+            mobile1.ViewInbox();
+        }
+
+        function funct6() {
+            mobile.ViewOutbox();
+        }
+
+        function functM6() {
+            mobile1.ViewOutbox();
+        }
+
+        function funct7() {
+            mobile.sendMessenger(mobile1);
+        }
+
+        function functM7() {
+            mobile1.sendMessenger(mobile);
+        }
+
+        function funct8() {
+            mobile.afterUse();
+        }
+
+        function functM8() {
+            mobile1.afterUse();
+        }
+
     </script>
 </body>
 
